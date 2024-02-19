@@ -1,24 +1,41 @@
-import logo from './logo.svg';
+
+import { useEffect } from 'react';
 import './App.css';
+import RecognizeForm from './components/RecognizeForm';
+import { loadFaceApiModels } from './services/faceApi';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import EnrollForm from './components/EnrollForm';
+
 
 function App() {
+
+  useEffect(() => {
+    async function a() {
+      await loadFaceApiModels();
+    }
+    a();
+  }, [])
+
+  const router = createBrowserRouter([
+    {
+      path:'/',
+      element:<RecognizeForm/>
+
+    },
+    {
+      path: '/enroll',
+      element: <EnrollForm />
+    }
+  ])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <div className=''>
+      <RouterProvider router={router}>
+         
+    </RouterProvider>
+    </div >
+   
   );
 }
 
